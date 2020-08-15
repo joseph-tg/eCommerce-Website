@@ -1,0 +1,50 @@
+
+.header {
+    height: 6.5rem;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.1);
+    // box-sizing: border-box;
+
+    .wrap {
+        max-width: 1450px;
+        position: relative;
+        margin: 0 auto;
+        height: 100%;
+
+        .logo {
+            width: 13.0rem;
+            position: absolute;
+            top: 50%; left: 10rem;
+            transform: translateY(-50%);
+
+            img {
+                display: block;
+                width: 100%;
+                margin: 0;
+            }
+        }
+
+        .callToActions {
+            position: absolute;
+            right: 10px; top: 50%;
+            transform: translateY(-50%);
+
+            ul, li {
+                margin: 0;
+                padding: 0;
+            }
+            li {
+                list-style-type: none;
+
+                a {
+                    font-size: 1.8rem;
+                    line-height: 1;
+                    color: #222;
+                    text-decoration: none;
+                    text-transform: uppercase;
+
+                }
+            }
+        }
+    }
+}
+
