@@ -1,0 +1,17 @@
+.btn {
+    display: block;
+    width: 100%;
+    margin: 1.5rem auto 0;
+    padding: 1rem;
+    color: #fff;
+    background: #333;
+    line-height: 1;
+    font-weight: 300;
+    font-size: 1.8rem;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+.btn:hover, .btn:focus {
+    background: #444;
+}

@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "pagename": "https://github.com/joseph-tg/eCommerce-Website.git",
-
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
+    "firebase": "^7.18.0",
     "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
