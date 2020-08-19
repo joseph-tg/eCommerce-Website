@@ -24,6 +24,7 @@ class App extends Component {
     super(props);
     this.state = {
       ...initialState
+      // console.log
     };
   }
 
@@ -73,6 +74,7 @@ class App extends Component {
               <Registration />
             </MainLayout>
           )} />
+
           <Route path="/login"
             render={() => currentUser ? <Redirect to="/" /> : (
               <MainLayout currentUser={currentUser}>
