@@ -20,6 +20,12 @@ import Login from './pages/Login';
 // we need to update the store since we are using a middleware
 class App extends Component {
   // constructor updates state
+  
+  constructor(props) {
+    super(props);
+    this.state = {
+      ...initialState
+      //
 
   authListener = null;
 
@@ -64,6 +70,7 @@ class App extends Component {
               <Registration />
             </MainLayout>
           )} />
+
           <Route path="/login"
             render={() => currentUser ? <Redirect to="/" /> : (
               <MainLayout>
