@@ -26,6 +26,19 @@ const App = props => {
   const { setCurrentUser, currentUser } = props;
   // constructor updates state ... useEffect Life sycle hook
   useEffect(() => {
+class App extends Component {
+  // constructor updates state
+  
+  constructor(props) {
+    super(props);
+    this.state = {
+      ...initialState
+      //
+
+  authListener = null;
+
+  componentDidMount() {
+    const { setCurrentUser } = this.props;
     // this adds event listener and signin the user as well as signout
     const authListener = auth.onAuthStateChanged(async userAuth => {
       if (userAuth) {
@@ -87,6 +100,22 @@ const App = props => {
     </div>
   );
 
+          <Route path="/login"
+            render={() => currentUser ? <Redirect to="/" /> : (
+              <MainLayout>
+                <Login />
+              </MainLayout>
+            )} />
+
+            <Route path="/recovery" render={() => (
+              <MainLayout>
+                <Recovery />
+              </MainLayout>
+            )} />
+        </Switch>
+      </div>
+    );
+  }
 }
 
 
