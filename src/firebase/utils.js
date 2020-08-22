@@ -9,10 +9,9 @@ export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 
 
-const GoogleProvider = new firebase.auth.GoogleAuthProvider(); 
+export const GoogleProvider = new firebase.auth.GoogleAuthProvider(); 
 //you can do this with other credentils provider like facebook linkdn twiter etc
 GoogleProvider.setCustomParameters({ prompt: 'select_account' });
-export const signInWithGoogle = () => auth.signInWithPopup(GoogleProvider);
 
 export const handleUserProfile = async (userAuth, additionalData) => {
     if (!userAuth) return;
