@@ -1,83 +1,95 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
+import { signInUser, signInWithGoogle, resetAllAuthForms } from './../../redux/User/user.actions';
 
 import './styles.scss';
-import { signInWithGoogle, auth } from './../../firebase/utils'
 
 import AuthWrapper from './../AuthWrapper';
 import FormInput from './../forms/FormInput';
 import Button from './../forms/Button';
 
+const mapState = ({ user }) => ({
+    signInSuccess: user.signInSuccess
+});
 
 const SignIn = props => {
+    const {signInSuccess} = useSelector(mapState);
+    const dispatch = useDispatch();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    useEffect(() => {
+        if (signInSuccess) {
+            resetForm();
+            dispatch(resetAllAuthForms());
+            props.history.push('/');
+        }
+    }, [signInSuccess])
 
     const resetForm = () => {
         setEmail('');
         setPassword('');
     }
 
-    const handleSubmit = async e => {
+    const handleSubmit = e => {
         e.preventDefault();
+        dispatch(signInUser({ email, password }));
         // this prevents relod after user clicks the button
-        try {
-            await auth.signInWithEmailAndPassword(email, password);
-                resetForm();
-                props.history.push('/');
-
-        } catch(err) {
-            // console.log(err)
-        }
     }
 
-        const configAuthWrapper = {
-            headline: 'LOGIN'
-        };
 
-        return (
-            <AuthWrapper {...configAuthWrapper}>
-                <div className="formwrap">
-                    <form onSubmit={handleSubmit}>
+    const handleGoogleSignIn = () => {
+        dispatch(signInWithGoogle());
+    }
 
-                        <FormInput
-                            type="email"
-                            name="email"
-                            value={email}
-                            placeholder="Email"
-                            handleChange={e => setEmail(e.target.value)}
-                        />
+    const configAuthWrapper = {
+        headline: 'LOGIN'
+    };
 
-                        <FormInput
-                            type="password"
-                            name="password"
-                            value={password}
-                            placeholder="Password"
-                            handleChange={e => setPassword(e.target.value)}
-                        />
+    return (
+        <AuthWrapper {...configAuthWrapper}>
+            <div className="formwrap">
+                <form onSubmit={handleSubmit}>
 
-                        <Button type="submit">
-                            LOGIN
-                        </Button>
+                    <FormInput
+                        type="email"
+                        name="email"
+                        value={email}
+                        placeholder="Email"
+                        handleChange={e => setEmail(e.target.value)}
+                    />
 
-                        <div className="socialSignin">
-                            <div className="row">
-                                <Button onClick={signInWithGoogle}>
-                                    Sign in with Google
-                                </Button>
-                            </div>
+                    <FormInput
+                        type="password"
+                        name="password"
+                        value={password}
+                        placeholder="Password"
+                        handleChange={e => setPassword(e.target.value)}
+                    />
+
+                    <Button type="submit">
+                        LOGIN
+                    </Button>
+
+                    <div className="socialSignin">
+                        <div className="row">
+                            <Button onClick={handleGoogleSignIn}>
+                                Sign in with Google
+                            </Button>
                         </div>
-                        <div className="links">
-                            <Link to="/recovery">
-                                Forgot Password? Reset
-                            </Link>
-                        </div>
-                    </form>
-                </div>
-            </AuthWrapper>
-        
-        );
-        
+                    </div>
+                    <div className="links">
+                        <Link to="/recovery">
+                            Forgot Password? Reset
+                        </Link>
+                    </div>
+                </form>
+            </div>
+        </AuthWrapper>
+    
+    );
+    
     }
 
 export default withRouter(SignIn);

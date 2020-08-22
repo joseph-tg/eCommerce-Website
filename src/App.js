@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { auth, handleUserProfile } from './firebase/utils';
 import { setCurrentUser } from './redux/User/user.actions';
@@ -23,7 +23,7 @@ import Login from './pages/Login';
 
 // we need to update the store since we are using a middleware
 const App = props => {
-  const { setCurrentUser, currentUser } = props;
+  const dispatch = useDispatch();
   // constructor updates state ... useEffect Life sycle hook
   useEffect(() => {
     // this adds event listener and signin the user as well as signout
@@ -31,14 +31,15 @@ const App = props => {
       if (userAuth) {
         const userRef = await handleUserProfile(userAuth);
         userRef.onSnapshot(snapshot => {
-          setCurrentUser({
+          dispatch(setCurrentUser({
             id: snapshot.id,
             ...snapshot.data()
-          });
+          }));
         })
       }
 
-      setCurrentUser(userAuth);
+      dispatch(setCurrentUser(userAuth));
+
     });
   
 
@@ -90,12 +91,6 @@ const App = props => {
 }
 
 
-const mapStateToProps = ({ user }) => ({
-  currentUser: user.currentUser
-});
+export default App;  
 
-const mapDispatchToProps = dispatch => ({
-  setCurrentUser: user => dispatch(setCurrentUser(user))
-});
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);  
