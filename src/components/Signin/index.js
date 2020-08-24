@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, withRouter } from 'react-router-dom';
-import { signInUser, signInWithGoogle, resetAllAuthForms } from './../../redux/User/user.actions';
+import { Link, useHistory } from 'react-router-dom';
+import { emailSignInStart, googleSignInStart } from './../../redux/User/user.actions';
 
 import './styles.scss';
 
@@ -10,22 +10,22 @@ import FormInput from './../forms/FormInput';
 import Button from './../forms/Button';
 
 const mapState = ({ user }) => ({
-    signInSuccess: user.signInSuccess
+    currentUser: user.currentUser
 });
 
 const SignIn = props => {
-    const {signInSuccess} = useSelector(mapState);
     const dispatch = useDispatch();
+    const history = useHistory();
+    const { currentUser } = useSelector(mapState);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     useEffect(() => {
-        if (signInSuccess) {
+        if (currentUser) {
             resetForm();
-            dispatch(resetAllAuthForms());
-            props.history.push('/');
+            history.push('/');
         }
-    }, [signInSuccess])
+    }, [currentUser])
 
     const resetForm = () => {
         setEmail('');
@@ -34,13 +34,13 @@ const SignIn = props => {
 
     const handleSubmit = e => {
         e.preventDefault();
-        dispatch(signInUser({ email, password }));
+        dispatch(emailSignInStart({ email, password }));
         // this prevents relod after user clicks the button
     }
 
 
     const handleGoogleSignIn = () => {
-        dispatch(signInWithGoogle());
+        dispatch(googleSignInStart());
     }
 
     const configAuthWrapper = {
@@ -92,4 +92,4 @@ const SignIn = props => {
     
     }
 
-export default withRouter(SignIn);
+export default SignIn;

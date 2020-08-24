@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Switch, Route, Redirect } from 'react-router-dom';
-import { auth, handleUserProfile } from './firebase/utils';
-import { setCurrentUser } from './redux/User/user.actions';
+import { useDispatch } from 'react-redux';
+import { Switch, Route } from 'react-router-dom';
+import { checkUserSession } from './redux/User/user.actions';
 
 // hoc
 import WithAuth from './hoc/withAuth';
@@ -24,8 +23,10 @@ import Login from './pages/Login';
 // we need to update the store since we are using a middleware
 const App = props => {
   const dispatch = useDispatch();
-  // constructor updates state ... useEffect Life sycle hook
   useEffect(() => {
+  redux-saga_middleware
+    dispatch(checkUserSession());
+
 class App extends Component {
   // constructor updates state
   
