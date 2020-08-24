@@ -24,7 +24,42 @@ import Login from './pages/Login';
 const App = props => {
   const dispatch = useDispatch();
   useEffect(() => {
+  redux-saga_middleware
     dispatch(checkUserSession());
+
+class App extends Component {
+  // constructor updates state
+  
+  constructor(props) {
+    super(props);
+    this.state = {
+      ...initialState
+      //
+
+  authListener = null;
+
+  componentDidMount() {
+    const { setCurrentUser } = this.props;
+    // this adds event listener and signin the user as well as signout
+    const authListener = auth.onAuthStateChanged(async userAuth => {
+      if (userAuth) {
+        const userRef = await handleUserProfile(userAuth);
+        userRef.onSnapshot(snapshot => {
+          dispatch(setCurrentUser({
+            id: snapshot.id,
+            ...snapshot.data()
+          }));
+        })
+      }
+
+      dispatch(setCurrentUser(userAuth));
+
+    });
+  
+
+  return () => {
+    authListener(); 
+  };
 
   }, []);
  
@@ -67,6 +102,22 @@ const App = props => {
     </div>
   );
 
+          <Route path="/login"
+            render={() => currentUser ? <Redirect to="/" /> : (
+              <MainLayout>
+                <Login />
+              </MainLayout>
+            )} />
+
+            <Route path="/recovery" render={() => (
+              <MainLayout>
+                <Recovery />
+              </MainLayout>
+            )} />
+        </Switch>
+      </div>
+    );
+  }
 }
 
 
