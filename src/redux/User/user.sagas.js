@@ -66,7 +66,7 @@ export function* signOutUser() {
 }
 
 export function* onSignOutUserStart() {
-    yield takeLatest(userTypes.SIGN_OUT_USER_START, signOutUserSuccess)
+    yield takeLatest(userTypes.SIGN_OUT_USER_START, signOutUser);
 }
 
 
@@ -75,7 +75,7 @@ export function* signUpUser({ payload: {
     email,
     password,
     confirmPassword
-}}) {
+} }) {
 
     if (password !== confirmPassword) {
         const err = ['Password Don\'t match'];
@@ -91,7 +91,7 @@ export function* signUpUser({ payload: {
         yield getSnapshotFromUserAuth(user, additionalData);
 
     } catch(err) {
-
+        // console.log(err);
     }
 }
 
@@ -99,7 +99,7 @@ export function* onSignUpUserStart() {
     yield takeLatest(userTypes.SIGN_UP_USER_START, signUpUser);
 }
 
-export function* resetPassword({ payload: { email }}){
+export function* resetPassword({ payload: { email }}) {
     try {
        yield call(handleResetPasswordAPI, email);
        yield put(

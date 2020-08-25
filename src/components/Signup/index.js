@@ -21,7 +21,7 @@ const Signup = props => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [errors, setErrors] = useState('');
+    const [errors, setErrors] = useState([]);
 
     useEffect(() => {
         if (currentUser) {
@@ -33,7 +33,7 @@ const Signup = props => {
 
     useEffect(() => {
         if (Array.isArray(userErr) && userErr.length > 0) {
-            setErrors(userErr)
+            setErrors(userErr);
         }
 
     }, [userErr]);
@@ -43,7 +43,7 @@ const Signup = props => {
         setEmail('');
         setPassword('');
         setConfirmPassword('');
-        setErrors('');
+        setErrors([]);
     };
 
     const handleFormSubmit = event => {
@@ -63,7 +63,6 @@ const Signup = props => {
     return (
 
         <AuthWrapper {...configAuthWrapper}>
-
             <div className="formwrap">
 
                 {errors.length > 0 && (
@@ -71,9 +70,9 @@ const Signup = props => {
                         {errors.map((err, index) => {
                             return (
                                 <li key={index}>
-                                        {err}
+                                    {err}
                                 </li>
-                            )
+                            );
                         })}
                     </ul>
                 )}

@@ -3,26 +3,34 @@ import { useDispatch } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 import { checkUserSession } from './redux/User/user.actions';
 
+
+// components
+import AdminToolbar  from './components/AdminToolbar';
+
+
 // hoc
 import WithAuth from './hoc/withAuth';
+import WithAdminAuth from './hoc/withAdminAuth';
 
 // Layouts
 import MainLayout from './layouts/MainLayout';
 import HomepageLayout from './layouts/Homepagelayout';
+import AdminLayout from './layouts/AdminLayout';
+import DashboardLayout from './layouts/DashboardLayout';
 
 // Pages
-
-import Homepage from './pages/homePage/index';
+import Homepage from './pages/homePage';
 import Registration from './pages/Registration';
-import Recovery from './pages/Recovery';
-import './default.scss';
-import Dashboard from './pages/Dashboard';
-
 import Login from './pages/Login';
+import Recovery from './pages/Recovery';
+import Dashboard from './pages/Dashboard';
+import Admin from './pages/Admin';
+import './default.scss';
 
-// we need to update the store since we are using a middleware
+
 const App = props => {
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(checkUserSession());
 
@@ -31,6 +39,7 @@ const App = props => {
 
   return (
     <div className="App"> 
+      <AdminToolbar />
       <Switch>
         <Route exact path="/" render={() => (
           <HomepageLayout>
@@ -57,12 +66,21 @@ const App = props => {
           )} />
 
           <Route path="/dashboard" render={() => (
-           <WithAuth>
-            <MainLayout>
-              <Dashboard />
-            </MainLayout>
-          </WithAuth>
+            <WithAuth>
+              <DashboardLayout>
+                <Dashboard />
+              </DashboardLayout>
+            </WithAuth>
           )} />
+
+          <Route path="/admin" render={() => (
+            <WithAdminAuth>
+              <MainLayout>
+                <Admin />
+              </MainLayout>
+            </WithAdminAuth>
+          )} />
+
       </Switch>
     </div>
   );

@@ -25,7 +25,7 @@ const SignIn = props => {
             resetForm();
             history.push('/');
         }
-    }, [currentUser])
+    }, [currentUser]);
 
     const resetForm = () => {
         setEmail('');
@@ -35,7 +35,6 @@ const SignIn = props => {
     const handleSubmit = e => {
         e.preventDefault();
         dispatch(emailSignInStart({ email, password }));
-        // this prevents relod after user clicks the button
     }
 
 
@@ -90,6 +89,6 @@ const SignIn = props => {
     
     );
     
-    }
+}
 
 export default SignIn;
