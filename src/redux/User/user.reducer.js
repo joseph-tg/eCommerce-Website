@@ -1,5 +1,4 @@
 import userTypes from './user.types';
-import { signUpUser } from './user.actions';
 
 const INITIAL_STATE= {
     currentUser: null,
@@ -17,17 +16,18 @@ const userReducer = (state=INITIAL_STATE, action) => {
                 userErr: []
             }
 
+        case userTypes.RESET_PASSWORD_SUCCESS: 
+            return {
+                ...state,
+                resetPasswordSuccess: action.payload
+            }
+
         case userTypes.USER_ERROR: 
             return {
                 ...state,
                 userErr: action.payload
             }
 
-        case userTypes.RESET_PASSWORD_SUCCESS: 
-            return {
-                ...state,
-                resetPasswordSuccess: action.payload
-            }
         case userTypes.RESET_USER_STATE:
         case userTypes.SIGN_OUT_USER_SUCCESS: 
             return {

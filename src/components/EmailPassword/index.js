@@ -18,7 +18,7 @@ const  EmailPassword = props => {
     const history = useHistory();
     const { resetPasswordSuccess, userErr } = useSelector(mapState);
     const [email, setEmail] = useState('');
-    const [errors, setErrors] = useState(['']);
+    const [errors, setErrors] = useState([]);
 
     useEffect(() => {
         if (resetPasswordSuccess) {

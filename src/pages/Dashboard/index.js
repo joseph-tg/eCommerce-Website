@@ -4,7 +4,7 @@ import './styles.scss';
 const Dashboard = props => {
     return (
         <h1>
-            You're logged in!
+            Welcome to your Portal
         </h1>
     );
 };
