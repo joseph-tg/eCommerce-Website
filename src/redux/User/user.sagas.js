@@ -5,7 +5,7 @@ import userTypes from './user.types';
 import { signInSuccess, signOutUserSuccess, resetPasswordSuccess, userError } from './user.actions';
 import { handleResetPasswordAPI } from './user.helpers';
 
-export function* getSnapshotFromUserAuth(user, additionalData={}) {
+export function* getSnapshotFromUserAuth(user, additionalData = {}) {
     try {
         const userRef = yield call(handleUserProfile, { userAuth: user, additionalData });
         const snapShot = yield userRef.get();
@@ -91,7 +91,7 @@ export function* signUpUser({ payload: {
         yield getSnapshotFromUserAuth(user, additionalData);
 
     } catch(err) {
-        // console.log(err);
+        console.log(err);
     }
 }
 

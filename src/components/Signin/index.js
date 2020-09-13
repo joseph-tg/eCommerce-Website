@@ -30,7 +30,7 @@ const SignIn = props => {
     const resetForm = () => {
         setEmail('');
         setPassword('');
-    }
+    };
 
     const handleSubmit = e => {
         e.preventDefault();
